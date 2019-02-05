@@ -33,6 +33,8 @@ MAIN_FILE_PATH	=	$(PATH_SRC)/main.c										\
 
 SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/argument_parser/init_argument.c				\
+					$(PATH_SRC)/argument_parser/check_each_short_flag.c		\
+					$(PATH_SRC)/argument_parser/check_each_long_flag.c		\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests

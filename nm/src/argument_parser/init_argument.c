@@ -20,6 +20,8 @@ static void set_values_to_false(argument_parser_t *args)
     args->display_size = false;
     args->display_undefined_only = false;
     args->display_defined_only = false;
+    args->number_of_file = 0;
+    args->files = NULL;
 }
 
 argument_parser_t *init_argument(void)
