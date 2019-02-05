@@ -26,14 +26,14 @@ jobs:
           install:
             - docker pull epitechcontent/epitest-docker
           script:
-            - docker run -v $PWD:/app epitechcontent/epitest-docker bash -c "cd app"
+            - docker run -v $PWD:/app epitechcontent/epitest-docker bash -c "cd app && make fclean && make"
 
         - stage: tests
           name: "Unit Tests"
           install:
             - docker pull epitechcontent/epitest-docker
           script:
-            - docker run -v $PWD:/app epitechcontent/epitest-docker bash -c "cd app"
+            - docker run -v $PWD:/app epitechcontent/epitest-docker bash -c "cd app && make tests_run"
         -
           name: "Functional Tests"
           if: branch IN (master, dev, tests)
