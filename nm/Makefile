@@ -5,33 +5,59 @@
 ## Makefile for the NM program
 ##
 
-BINARY_NAME = my_nm
+## ---------------- NAMES ---------------- ##
+BINARY_NAME		=	my_nm
 
-CC	=	gcc $(HEADER) -g3
+BINARY_TEST_MAME =	unit_test
 
-WARNING	=	-W -Wextra -Werror
+## ---------------- CC ---------------- ##
+CC				=	gcc $(HEADER) -g3
 
-CFLAGS	=	$(WARNING)
+## ---------------- FLAGS ---------------- ##
+WARNING			=	-W -Wextra -Werror
 
-HEADER	=	-I./include
+CFLAGS			=	$(WARNING)
 
-OBJS	=	$(SRC:.c=.o)
+HEADER			=	-I./include
 
-PATH_SRC	=	./src
+LDFLAGS = -lcriterion -lgcov --coverage
 
-SRC			=	$(PATH_SRC)/main.c	\
-				$(PATH_SRC)/argument_parser/get_argument.c \
-				$(PATH_SRC)/argument_parser/init_argument.c \
+## ---------------- OBJS ---------------- ##
+OBJS			=	$(SRC:.c=.o)											\
+					$(MAIN_FILE_PATH:.c=.o)									\
 
+## SRC ##
+PATH_SRC		=	./src
+
+MAIN_FILE_PATH	=	$(PATH_SRC)/main.c										\
+
+SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
+					$(PATH_SRC)/argument_parser/init_argument.c				\
+
+## ---------------- TESTS ---------------- ##
+PATH_TEST		=	./tests
+
+TEST_SRC		=	$(PATH_TEST)/argument_parser/tests_init_args.c			\
+
+## ---------------- RULES ---------------- ##
 all: $(BINARY_NAME)
 
 $(BINARY_NAME): $(OBJS)
 	gcc -o $(BINARY_NAME) $(OBJS) $(WARNING)
 
+tests_compile:
+	gcc -o $(BINARY_TEST_MAME) $(TEST_SRC) $(SRC) $(CFLAGS) $(LDFLAGS) $(HEADER)
+
+tests_run: tests_compile
+	./$(BINARY_TEST_MAME) -j1
+
+tests_run_docker:
+	docker run -v $(PWD):/app epitechcontent/epitest-docker bash -c "cd app && make fclean && make tests_run && gcovr"
+
 clean:
 	rm -f *.gc*
 
 fclean: clean
-	rm -f $(BINARY_NAME) $(OBJS)
+	rm -f $(BINARY_NAME) $(BINARY_TEST_MAME) $(OBJS)
 
 re: fclean all
