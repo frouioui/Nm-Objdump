@@ -7,7 +7,7 @@
 
 BINARY_NAME = my_nm
 
-CC	=	gcc $(HEADER)
+CC	=	gcc $(HEADER) -g3
 
 WARNING	=	-W -Wextra -Werror
 
@@ -20,18 +20,13 @@ OBJS	=	$(SRC:.c=.o)
 PATH_SRC	=	./src
 
 SRC			=	$(PATH_SRC)/main.c	\
+				$(PATH_SRC)/argument_parser/get_argument.c \
+				$(PATH_SRC)/argument_parser/init_argument.c \
 
 all: $(BINARY_NAME)
 
 $(BINARY_NAME): $(OBJS)
 	gcc -o $(BINARY_NAME) $(OBJS) $(WARNING)
-
-tests_run:
-	g++ -o $(BINARY_UT_NAME) $(UT_SRC) $(SRC) $(CFLAGS) $(LDFLAGS) $(HEADER)
-	./$(BINARY_UT_NAME) -j1
-
-tests_run_docker:
-	docker run -v $(PWD):/app epitechcontent/epitest-docker bash -c "cd app && make fclean && make tests_run && gcovr"
 
 clean:
 	rm -f *.gc*
