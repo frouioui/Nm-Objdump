@@ -10,7 +10,8 @@
 
 enum error_parser_e {
     NO_ERROR_PARSER,
-    INVALID_FLAG
+    INVALID_FLAG,
+    INVALID_SYNTAX
 };
 
 typedef enum error_parser_e error_parser_t;

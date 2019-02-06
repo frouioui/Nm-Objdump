@@ -11,12 +11,17 @@
 #include "argument_parser.h"
 #include "parser_error.h"
 
+static bool check_arg_is_empty(char *arg)
+{
+    return (strlen(arg) > 1 ? false : true);
+}
+
 static int check_one_short_flag(char arg)
 {
     bool found = false;
     int flag_nb = 0;
 
-    while (flag_nb < NUMBER_OF_SHORT_FLAG && found == false) {
+    while (flag_nb < (int)NUMBER_OF_SHORT_FLAG && found == false) {
         for (unsigned int i = 0; short_flags[flag_nb][i] && !found; i++) {
             found = (arg == short_flags[flag_nb][i] ? true : false);
         }
@@ -41,13 +46,21 @@ static void apply_short_flag(unsigned int flag_nb, argument_parser_t *args)
 
 error_parser_t check_each_short_flag(char *arg, argument_parser_t *args)
 {
-    error_parser_t error = INVALID_FLAG;
+    error_parser_t error = NO_ERROR_PARSER;
     int flag_nb;
 
-    for (unsigned int i = 0; arg[i]; i++) {
-        flag_nb = check_one_short_flag(arg[i]);
-        if (flag_nb >= 0)
-            apply_short_flag(flag_nb, args);
+    if (check_arg_is_empty(arg) == true) {
+        error = INVALID_SYNTAX;
     }
-    return (INVALID_FLAG);
+    for (unsigned int i = 1; arg[i]; i++) {
+        flag_nb = check_one_short_flag(arg[i]);
+        if (flag_nb >= 0) {
+            apply_short_flag(flag_nb, args);
+            error = NO_ERROR_PARSER;
+        } else if (flag_nb < 0) {
+            error = INVALID_FLAG;
+            break;
+        }
+    }
+    return (error);
 }

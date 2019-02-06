@@ -17,6 +17,7 @@ tests_run_docker:
 
 clean:
 	rm -f *.gc*
+	make clean -C ./nm
 
 fclean: clean
 	rm -f unit_test_nm my_nm

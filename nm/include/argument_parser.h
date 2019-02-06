@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <getopt.h>
 
+#include "parser_error.h"
+
 struct argument_parser_s {
     bool display_filename;
     bool display_debug;
@@ -32,13 +34,16 @@ struct argument_parser_s {
 typedef struct argument_parser_s argument_parser_t;
 
 // program's flag
-const unsigned int NUMBER_OF_LONG_FLAG = 10;
-const unsigned int NUMBER_OF_SHORT_FLAG = 9;
-extern const char long_flags[NUMBER_OF_LONG_FLAG][20];
-extern const char short_flags[NUMBER_OF_SHORT_FLAG][20];
+extern const unsigned int NUMBER_OF_LONG_FLAG;
+extern const unsigned int NUMBER_OF_SHORT_FLAG;
+extern const char long_flags[10][20];
+extern const char short_flags[9][2];
+
 
 argument_parser_t *init_argument(void);
 bool get_argument(int argc, char **argv, argument_parser_t *args);
+error_parser_t check_each_short_flag(char *arg, argument_parser_t *args);
+error_parser_t check_each_long_flag(char *arg, argument_parser_t *args);
 
 #endif // _ARGUMENT_PARSER_H
 

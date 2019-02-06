@@ -11,11 +11,15 @@
 #include "argument_parser.h"
 #include "parser_error.h"
 
-static int check_one_long_flag(char *arg, char *flag)
+static int check_one_long_flag(char *arg, char const *flag)
 {
     return (strcmp(arg, flag) == 0 ? 1 : -1);
 }
 
+static bool check_arg_is_empty(char *arg)
+{
+    return (strlen(arg) > 2 ? false : true);
+}
 static void apply_long_flag(unsigned int flag_nb, argument_parser_t *args)
 {
     flag_nb == 0 ? args->display_filename = true : 0;
@@ -33,8 +37,11 @@ static void apply_long_flag(unsigned int flag_nb, argument_parser_t *args)
 error_parser_t check_each_long_flag(char *arg, argument_parser_t *args)
 {
     error_parser_t error = INVALID_FLAG;
-    unsigned int flag_nb;
+    unsigned int flag_nb = 0;
 
+    if (check_arg_is_empty(arg) == true) {
+        return INVALID_SYNTAX;
+    }
     while (flag_nb < NUMBER_OF_LONG_FLAG) {
         if (check_one_long_flag(arg, long_flags[flag_nb]) >= 0) {
             apply_long_flag(flag_nb, args);
@@ -43,5 +50,5 @@ error_parser_t check_each_long_flag(char *arg, argument_parser_t *args)
         }
         flag_nb++;
     }
-    return (INVALID_FLAG);
+    return (error);
 }
