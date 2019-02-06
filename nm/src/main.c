@@ -18,7 +18,9 @@ int main(int argc, char **argv)
     if (args == NULL)
         return (84);
     args_ok = get_argument(argc, argv, args);
-    if (args_ok == false)
-        return (84);
+    if (args_ok == false || args->display_helper == true) {
+        display_helper();
+        return (args_ok == true ? 0 : 84);
+    }
     return (args_ok);
 }
