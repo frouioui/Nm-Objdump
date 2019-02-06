@@ -44,6 +44,7 @@ argument_parser_t *init_argument(void);
 bool get_argument(int argc, char **argv, argument_parser_t *args);
 error_parser_t check_each_short_flag(char *arg, argument_parser_t *args);
 error_parser_t check_each_long_flag(char *arg, argument_parser_t *args);
+void get_filename(char *arg, argument_parser_t *args);
 
 #endif // _ARGUMENT_PARSER_H
 

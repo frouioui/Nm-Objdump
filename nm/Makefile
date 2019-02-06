@@ -36,6 +36,7 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/argument_parser/check_each_short_flag.c		\
 					$(PATH_SRC)/argument_parser/check_each_long_flag.c		\
 					$(PATH_SRC)/argument_parser/set_global_variable.c		\
+					$(PATH_SRC)/argument_parser/get_filename.c				\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests
@@ -43,6 +44,8 @@ PATH_TEST		=	./tests
 TEST_SRC		=	$(PATH_TEST)/argument_parser/tests_init_args.c				\
 					$(PATH_TEST)/argument_parser/tests_check_each_short_flag.c	\
 					$(PATH_TEST)/argument_parser/tests_check_each_long_flag.c	\
+					$(PATH_TEST)/argument_parser/tests_get_filename.c			\
+					$(PATH_TEST)/argument_parser/tests_get_argument.c			\
 
 ## ---------------- RULES ---------------- ##
 all: $(BINARY_NAME)

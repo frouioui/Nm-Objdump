@@ -18,5 +18,7 @@ int main(int argc, char **argv)
     if (args == NULL)
         return (84);
     args_ok = get_argument(argc, argv, args);
-    return (0);
+    if (args_ok == false)
+        return (84);
+    return (args_ok);
 }
