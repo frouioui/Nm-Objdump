@@ -10,8 +10,8 @@
 
 enum execution_error_type_e {
     NO_EXEC_ERROR,
-    EXEC_FAILED_ALLOC,
-    EXEC_NO_SUCH_FILE
+    EXEC_INTERNAL_ERROR_MEMORY,
+    EXEC_NO_SUCH_FILE,
 };
 
 typedef enum execution_error_type_e execution_error_type_t;

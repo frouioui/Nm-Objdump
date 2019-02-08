@@ -42,6 +42,7 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/execution/init_execution_information.c		\
 					$(PATH_SRC)/execution/new_error.c						\
 					$(PATH_SRC)/execution/open_file.c						\
+					$(PATH_SRC)/execution/load_file.c						\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 
