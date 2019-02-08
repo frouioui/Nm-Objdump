@@ -9,6 +9,7 @@
         "new": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "execution.h": "c"
+        "execution.h": "c",
+        "elf.h": "c"
     }
 }

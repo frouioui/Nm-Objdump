@@ -9,6 +9,7 @@
 #include "nm_program.h"
 #include "execution.h"
 #include "execution_error.h"
+#include "elf_reader.h"
 
 static bool is_errored(execution_information_t *exec)
 {
@@ -27,6 +28,7 @@ execution_error_t execution(nm_program_t *nm)
         load_file_in_memory(exec);
         if (is_errored(exec) == true)
             return (exec->error);
+        read_elf(nm->args, exec);
         close(exec->fd);
         file_index++;
     }
