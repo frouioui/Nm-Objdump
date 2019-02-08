@@ -28,4 +28,6 @@ Test(argument_parser, check_init_default_value)
     cr_assert_eq(args->display_size, false);
     cr_assert_eq(args->display_undefined_only, false);
     cr_assert_eq(args->display_defined_only, false);
+    cr_assert_eq(args->error.type == NO_ERROR_PARSER, true);
+    cr_assert_null(args->error.message);
 }

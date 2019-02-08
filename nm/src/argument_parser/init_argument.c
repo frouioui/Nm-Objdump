@@ -8,6 +8,12 @@
 #include <stdlib.h>
 #include "argument_parser.h"
 
+static void set_error_to_new(argument_parser_t *args)
+{
+    args->error.type = NO_ERROR_PARSER;
+    args->error.message = NULL;
+}
+
 static void set_values_to_false(argument_parser_t *args)
 {
     args->display_filename = false;
@@ -31,5 +37,6 @@ argument_parser_t *init_argument(void)
     if (args == NULL)
         return (NULL);
     set_values_to_false(args);
+    set_error_to_new(args);
     return (args);
 }

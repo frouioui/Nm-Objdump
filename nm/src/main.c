@@ -7,18 +7,28 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include "nm_program.h"
+#include "helper.h"
 #include "argument_parser.h"
 
 int main(int argc, char **argv)
 {
-    argument_parser_t *args = NULL;
-    bool args_ok = false;
+    nm_program_t *nm = NULL;
 
-    args = init_argument();
-    if (args == NULL)
-        return (84);
-    args_ok = get_argument(argc, argv, args);
-    if (args_ok == false)
-        return (84);
-    return (args_ok);
+    nm = start_program(argv[0]);
+    if (nm == NULL || nm->args == NULL)
+        return (NM_FAILURE);
+    get_argument(argc, argv, nm->args);
+
+    if (nm->args->error.type != NO_ERROR_PARSER) {
+        display_error(nm->prog_name, nm->args->error);
+        return (NM_FAILURE);
+    } else if (nm->args->display_helper == true) {
+        display_helper();
+        return (NM_SUCCESS);
+    }
+
+    // TODO: run simulation
+
+    return (NM_SUCCESS);
 }

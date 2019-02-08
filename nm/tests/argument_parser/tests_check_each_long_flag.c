@@ -60,8 +60,10 @@ Test(argument_parser, check_each_long_flag_not_correct_simple_string)
     return_value = check_each_long_flag(argv, args);
     cr_assert_not_null(argv);
     cr_assert_eq(return_value == INVALID_FLAG, true);
+    cr_assert_str_eq(args->error.message, "unrecognized option '--imma_flag'");
 }
 
+// FIXME: The way we handle error on main.c is going to change, fix me...
 Test(argument_parser, check_each_long_flag_empty, .timeout = 0.01)
 {
     error_parser_t return_value = NO_ERROR_PARSER;
