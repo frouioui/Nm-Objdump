@@ -31,6 +31,7 @@ void open_file(execution_information_t *exec, char *path)
         return;
     fd = open(path, O_RDONLY);
     if (fd == -1) {
+        exec->fd = -1;
         exec->error = new_execution_error(EXEC_NO_SUCH_FILE,
             new_no_such_file_error(path), "open_file");
         return;

@@ -55,6 +55,7 @@ TEST_SRC		=	$(PATH_TEST)/argument_parser/tests_init_args.c				\
 					$(PATH_TEST)/argument_parser/tests_get_argument.c			\
 					$(PATH_TEST)/execution/tests_new_exec_error.c				\
 					$(PATH_TEST)/execution/tests_init_execution.c				\
+					$(PATH_TEST)/execution/tests_open_file.c					\
 
 ## ---------------- RULES ---------------- ##
 all: $(BINARY_NAME)
