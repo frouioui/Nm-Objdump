@@ -10,7 +10,7 @@
 
 #include "parser_error.h"
 
-extern const char HELPER[200];
+extern const char helper[200];
 
 void display_helper(void);
 void display_error(char *prog_name, error_parser_info_t error);

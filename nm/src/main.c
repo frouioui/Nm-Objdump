@@ -20,14 +20,15 @@ int main(int argc, char **argv)
         return (NM_FAILURE);
     get_argument(argc, argv, nm->args);
 
-    // PROBLEM: Change the way we handle error here!
-
     if (nm->args->error.type != NO_ERROR_PARSER) {
         display_error(nm->prog_name, nm->args->error);
         return (NM_FAILURE);
+    } else if (nm->args->display_helper == true) {
+        display_helper();
+        return (NM_SUCCESS);
     }
-    if (nm->args->display_helper == true) {
-        // display_helper();
-    }
+
+    // TODO: run simulation
+
     return (NM_SUCCESS);
 }

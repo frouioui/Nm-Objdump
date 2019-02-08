@@ -39,6 +39,7 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/argument_parser/get_filename.c				\
 					$(PATH_SRC)/init_program/start_program.c				\
 					$(PATH_SRC)/display_error.c								\
+					$(PATH_SRC)/display_helper.c							\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests
