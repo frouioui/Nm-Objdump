@@ -10,6 +10,7 @@
 #include "nm_program.h"
 #include "helper.h"
 #include "argument_parser.h"
+#include "execution.h"
 
 int main(int argc, char **argv)
 {
@@ -27,8 +28,6 @@ int main(int argc, char **argv)
         display_helper();
         return (NM_SUCCESS);
     }
-
-    // TODO: run simulation
-
+    execution(nm);
     return (NM_SUCCESS);
 }

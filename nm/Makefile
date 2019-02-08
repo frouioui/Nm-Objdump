@@ -38,6 +38,10 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/argument_parser/set_global_variable.c		\
 					$(PATH_SRC)/argument_parser/get_filename.c				\
 					$(PATH_SRC)/init_program/start_program.c				\
+					$(PATH_SRC)/execution/execution.c						\
+					$(PATH_SRC)/execution/init_execution_information.c		\
+					$(PATH_SRC)/execution/new_error.c						\
+					$(PATH_SRC)/execution/open_file.c						\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 
@@ -49,6 +53,8 @@ TEST_SRC		=	$(PATH_TEST)/argument_parser/tests_init_args.c				\
 					$(PATH_TEST)/argument_parser/tests_check_each_long_flag.c	\
 					$(PATH_TEST)/argument_parser/tests_get_filename.c			\
 					$(PATH_TEST)/argument_parser/tests_get_argument.c			\
+					$(PATH_TEST)/execution/tests_new_exec_error.c				\
+					$(PATH_TEST)/execution/tests_init_execution.c				\
 
 ## ---------------- RULES ---------------- ##
 all: $(BINARY_NAME)
