@@ -37,6 +37,8 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/argument_parser/check_each_long_flag.c		\
 					$(PATH_SRC)/argument_parser/set_global_variable.c		\
 					$(PATH_SRC)/argument_parser/get_filename.c				\
+					$(PATH_SRC)/init_program/start_program.c				\
+					$(PATH_SRC)/display_error.c								\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests
@@ -63,7 +65,7 @@ tests_run_docker:
 	docker run -v $(PWD):/app epitechcontent/epitest-docker bash -c "cd app && make fclean && make tests_run && gcovr"
 
 clean:
-	rm -f *.gc*
+	rm -f *.gc* $(OBJS)
 
 fclean: clean
 	rm -f $(BINARY_NAME) $(BINARY_TEST_MAME) $(OBJS)

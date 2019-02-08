@@ -34,6 +34,19 @@ static void apply_long_flag(unsigned int flag_nb, argument_parser_t *args)
     flag_nb == 9 ? args->display_helper = true : 0;
 }
 
+static char *create_new_parser_message_error(char *arg)
+{
+    char *error = calloc(1, sizeof(char) * (strlen(arg) +
+                            strlen("unrecognized option '") + 2));
+
+    if (error == NULL)
+        return (NULL);
+    error = strcat(error, "unrecognized option '");
+    error = strcat(error, arg);
+    error = strcat(error, "'");
+    return (error);
+}
+
 error_parser_t check_each_long_flag(char *arg, argument_parser_t *args)
 {
     error_parser_t error = INVALID_FLAG;
@@ -50,5 +63,6 @@ error_parser_t check_each_long_flag(char *arg, argument_parser_t *args)
         }
         flag_nb++;
     }
+    args->error.message = create_new_parser_message_error(arg);
     return (error);
 }

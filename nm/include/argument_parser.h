@@ -29,6 +29,7 @@ struct argument_parser_s {
     bool display_defined_only;
     size_t number_of_file;
     char **files;
+    error_parser_info_t error;
 };
 
 typedef struct argument_parser_s argument_parser_t;
@@ -39,9 +40,8 @@ extern const unsigned int NUMBER_OF_SHORT_FLAG;
 extern const char long_flags[10][20];
 extern const char short_flags[9][2];
 
-
 argument_parser_t *init_argument(void);
-bool get_argument(int argc, char **argv, argument_parser_t *args);
+void get_argument(int argc, char **argv, argument_parser_t *args);
 error_parser_t check_each_short_flag(char *arg, argument_parser_t *args);
 error_parser_t check_each_long_flag(char *arg, argument_parser_t *args);
 void get_filename(char *arg, argument_parser_t *args);

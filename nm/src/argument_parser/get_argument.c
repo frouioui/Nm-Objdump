@@ -21,7 +21,7 @@ static bool check_file_flag_exists(int argc, char **argv)
     return (false);
 }
 
-bool get_argument(int argc, char **argv, argument_parser_t *args)
+void get_argument(int argc, char **argv, argument_parser_t *args)
 {
     error_parser_t error = NO_ERROR_PARSER;
 
@@ -36,5 +36,5 @@ bool get_argument(int argc, char **argv, argument_parser_t *args)
         else
             get_filename(argv[i], args);
     }
-    return (error == NO_ERROR_PARSER ? true : false);
+    args->error.type = error;
 }

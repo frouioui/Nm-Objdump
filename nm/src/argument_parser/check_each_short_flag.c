@@ -44,6 +44,19 @@ static void apply_short_flag(unsigned int flag_nb, argument_parser_t *args)
     flag_nb == 8 ? args->display_helper = true : 0;
 }
 
+static char *create_new_parser_message_error(char c)
+{
+    char *error = calloc(1, sizeof(char) *
+                    (2 + strlen("invalid option -- ''")));
+
+    if (error == NULL)
+        return (NULL);
+    error = strcat(error, "invalid option -- '");
+    error[strlen(error)] = c;
+    error[strlen(error)] = '\'';
+    return (error);
+}
+
 error_parser_t check_each_short_flag(char *arg, argument_parser_t *args)
 {
     error_parser_t error = NO_ERROR_PARSER;
@@ -58,6 +71,7 @@ error_parser_t check_each_short_flag(char *arg, argument_parser_t *args)
             apply_short_flag(flag_nb, args);
             error = NO_ERROR_PARSER;
         } else if (flag_nb < 0) {
+            args->error.message = create_new_parser_message_error(arg[i]);
             error = INVALID_FLAG;
             break;
         }
