@@ -8,9 +8,26 @@
 #if !defined(_ELF_READER_H)
 #define _ELF_READER_H
 
+#include <elf.h>
 #include "argument_parser.h"
 #include "execution.h"
 
+enum arch_elf_file_e {
+    ARCH_NOT_FOUND,
+    ARCH_32,
+    ARCH_64
+};
+
+typedef enum arch_elf_file_e arch_elf_file_t;
+
+struct elf_info_s {
+    arch_elf_file_t arch;
+};
+
+typedef struct elf_info_s elf_info_t;
+
 void read_elf(argument_parser_t *args, execution_information_t *exec);
+elf_info_t *get_info_file(void *file);
+bool is_magic_valid(Elf64_Ehdr *header);
 
 #endif // _ELF_READER_H
