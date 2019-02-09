@@ -12,16 +12,18 @@
 
 void read_elf(argument_parser_t *args, execution_information_t *exec)
 {
-    elf_info_t *elf_file = get_info_file(exec->file);
+    elf_info_t *elf_file = get_info_file(exec->file, exec->fd);
 
     if (elf_file == NULL)
         return;
-    printf("is file valid = %d\n", is_magic_valid(exec->file));
-    if (elf_file->arch == ARCH_64) {
-        printf("FILE ARCH = 64\n");
-    } else if (elf_file->arch == ARCH_32) {
-        printf("FILE ARCH = 32\n");
+    if (elf_file->static_lib == true) {
+        printf("it is a static lib\n");
     } else {
-        printf("NO ARCH FOUND\n");
+        printf("it is not a static lib\n");
+        if (is_magic_valid(elf_file->header) == true) {
+            printf("and it is a valid elf file\n");
+        } else {
+            printf("but it is not a valid elf file\n");
+        }
     }
 }
