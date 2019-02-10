@@ -16,6 +16,7 @@ void read_elf(argument_parser_t *args, execution_information_t *exec)
 
     if (elf_file == NULL)
         return;
+    printf("ARCH=%d\n", elf_file->arch);
     if (elf_file->static_lib == true) {
         printf("it is a static lib\n");
     } else {

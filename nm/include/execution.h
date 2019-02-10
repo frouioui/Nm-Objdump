@@ -13,6 +13,7 @@
 
 struct execution_information_s {
     int fd;
+    unsigned int size;
     void *file;
     execution_error_t error;
 };
@@ -23,5 +24,6 @@ execution_information_t *init_execution_information();
 void open_file(execution_information_t *exec, char *path);
 execution_error_t execution(nm_program_t *nm);
 void load_file_in_memory(execution_information_t *exec);
+void check_size_file(execution_information_t *exec, char *path);
 
 #endif // _EXECUTION_H

@@ -25,6 +25,7 @@ execution_error_t execution(nm_program_t *nm)
         open_file(exec, nm->args->files[file_index]);
         if (is_errored(exec) == true)
             return (exec->error);
+        check_size_file(exec, nm->args->files[file_index]);
         load_file_in_memory(exec);
         if (is_errored(exec) == true)
             return (exec->error);

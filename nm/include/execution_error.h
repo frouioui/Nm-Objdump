@@ -12,6 +12,8 @@ enum execution_error_type_e {
     NO_EXEC_ERROR,
     EXEC_INTERNAL_ERROR_MEMORY,
     EXEC_NO_SUCH_FILE,
+    EXEC_FILE_IS_DIR,
+    EXEC_FILE_IS_NOT_ORDINARY
 };
 
 typedef enum execution_error_type_e execution_error_type_t;

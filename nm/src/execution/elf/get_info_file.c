@@ -26,8 +26,11 @@ static bool is_static_lib(int fd)
 
 static arch_elf_file_t get_arch(Elf64_Ehdr *elf)
 {
-    unsigned int arch = elf->e_ident[EI_CLASS];
+    unsigned int arch = 0;
 
+    if (!elf->e_ident) {
+        return (ARCH_32);
+    }
     if (arch == ELFCLASS32) {
         return (ARCH_32);
     } else if (arch == ELFCLASS64) {
@@ -46,6 +49,6 @@ elf_info_t *get_info_file(void *file, int fd)
         return (NULL);
     info->header = file;
     info->arch = get_arch(info->header);
-    info->static_lib = is_static_lib(fd);
+    info->static_lib = true;//is_static_lib(fd);
     return (info);
 }

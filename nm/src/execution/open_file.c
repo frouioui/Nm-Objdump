@@ -23,10 +23,29 @@ static char *new_no_such_file_error(char *path)
     return (str);
 }
 
+static char *new_file_is_dir_error(char *path)
+{
+    char *str = calloc(1, sizeof(char) *
+        (strlen(path) + 2 + strlen("Warning: '': is a directory")));
+
+    str = strcat(str, "Warning: '");
+    str = strcat(str, path);
+    str = strcat(str, "': is a directory");
+    return (str);
+}
+
 void open_file(execution_information_t *exec, char *path)
 {
     int fd = 0;
+    struct stat file_info;
 
+    stat(path, &file_info);
+    if (S_ISDIR(file_info.st_mode)) {
+        exec->fd = -1;
+        exec->error = new_execution_error(EXEC_FILE_IS_DIR,
+            new_file_is_dir_error(path), "open_file");
+        return;
+    }
     if (path == NULL)
         return;
     fd = open(path, O_RDONLY);
