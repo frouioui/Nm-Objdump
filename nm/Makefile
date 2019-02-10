@@ -47,6 +47,7 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/execution/elf/read_elf.c					\
 					$(PATH_SRC)/execution/elf/get_info_file.c				\
 					$(PATH_SRC)/execution/elf/check_magic.c					\
+					$(PATH_SRC)/execution/elf/get_symbol_address.c			\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 
