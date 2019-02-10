@@ -9,7 +9,7 @@
 #include "execution.h"
 #include "execution_error.h"
 
-execution_information_t *init_execution_information()
+execution_information_t *init_execution_information(char *path)
 {
     execution_information_t *exec = NULL;
 
@@ -19,5 +19,6 @@ execution_information_t *init_execution_information()
     exec->error = new_execution_error(NO_ERROR_PARSER, NULL, NULL);
     exec->fd = 0;
     exec->file = NULL;
+    exec->name = path;
     return (exec);
 }

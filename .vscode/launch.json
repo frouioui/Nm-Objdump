@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/my_nm",
-            "args": ["/dev/null"],
+            "args": ["my_nm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
