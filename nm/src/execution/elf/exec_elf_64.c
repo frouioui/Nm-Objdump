@@ -25,12 +25,12 @@ static void find_one_symbol(argument_parser_t *args, Elf64_Sym *sym,
     Elf64_Shdr *shdr = elf->shdr;
     Elf64_Shdr *symtab = elf->symtab;
 
-    // TODO: Accept the debug sysms
+    // TODO: Accept the debug symbol
     if (sym->st_name > 0 && sym->st_info != STT_FILE) {
         elf->symbol_list[*i].sym = sym;
         if (sym->st_info == STT_SECTION && sym->st_shndx <= header->e_shnum &&
             sym->st_name == 0) {
-            elf->symbol_list[*i].name = ((char *)header +
+            elf->symbol_list[*i].name = &((char *)header +
             shdr[header->e_shstrndx].sh_offset)[shdr[sym->st_shndx].sh_name];
         } else {
             elf->symbol_list[*i].name = &((char *)header +
@@ -38,7 +38,7 @@ static void find_one_symbol(argument_parser_t *args, Elf64_Sym *sym,
         }
         elf->symbol_list[*i].value = sym->st_value;
         elf->symbol_list[*i].type = guess_type_64(header, shdr, sym);
-        *i++;
+        (*i)++;
     }
 }
 
@@ -48,7 +48,7 @@ void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
     unsigned int total_nb_symb = 0;
     Elf64_Ehdr *header = elf->header;
     Elf64_Shdr *symtab = elf->symtab;
-    Elf64_Sym *sym = ((char *)header + symtab->sh_offset);
+    Elf64_Sym *sym = (Elf64_Sym *)((char *)header + symtab->sh_offset);
 
     elf->symbol_list = new_symbol_list(symtab->sh_size);
     if (elf->symbol_list == NULL)
@@ -56,5 +56,7 @@ void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
     while ((void *)sym < (void *)(((char *)header + symtab->sh_offset) +
         symtab->sh_size)) {
         find_one_symbol(args, sym, elf, &total_nb_symb);
+        sym++;
     }
+    display_symbol(args, exec, elf, total_nb_symb);
 }

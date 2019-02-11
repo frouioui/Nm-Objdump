@@ -48,5 +48,7 @@ void get_address_symbol(elf_info_t *elf, execution_information_t *exec);
 void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
     elf_info_t *elf_info);
 char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym);
+void display_symbol(argument_parser_t *args, execution_information_t *exec,
+    elf_info_t *elf, unsigned int nb_symbol);
 
 #endif // _ELF_READER_H

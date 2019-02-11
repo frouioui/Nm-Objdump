@@ -6,6 +6,7 @@
 */
 
 #include <elf.h>
+#include <string.h>
 
 static char find_type(Elf64_Shdr *shdr, Elf64_Sym *sym)
 {
@@ -40,7 +41,7 @@ char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym)
         ELF64_ST_TYPE(sym->st_info) == STT_OBJECT)
         c = (sym->st_shndx == SHN_UNDEF) ? 'v' : 'V';
     else
-        c = find_type_2(shdr, sym);
+        c = find_type(shdr, sym);
     if (c == '?' &&
         (strcmp(&((char *)header + shdr[header->e_shstrndx].sh_offset)
         [shdr[sym->st_shndx].sh_name], ".init_array") ||
