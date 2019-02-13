@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include <sys/mman.h>
 #include "nm_program.h"
 #include "execution.h"
 #include "execution_error.h"
@@ -21,6 +22,7 @@ static void release_exec_information(execution_information_t *exec)
     if (exec->fd > 2) {
         close(exec->fd);
     }
+    // TODO: unmap the file pointer, we need to know the size of the pointer
     free(exec);
 }
 
@@ -39,6 +41,8 @@ execution_error_t execution(nm_program_t *nm)
         if (is_errored(exec) == true)
             return (exec->error);
         read_elf(nm->args, exec);
+        if (is_errored(exec) == true)
+            return (exec->error);
         release_exec_information(exec);
         file_index++;
     }

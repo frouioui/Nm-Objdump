@@ -36,7 +36,7 @@ static arch_elf_file_t get_arch(Elf64_Ehdr *elf)
     return (ARCH_NOT_FOUND);
 }
 
-elf_info_t *get_info_file(void *file, int fd, char *path)
+elf_info_t *get_info_file(void *file, int fd, char *path, size_t size)
 {
     elf_info_t *info = malloc(sizeof(elf_info_t));
     Elf64_Ehdr *elf = file;
@@ -48,5 +48,6 @@ elf_info_t *get_info_file(void *file, int fd, char *path)
     info->arch = get_arch(info->header);
     info->static_lib = is_static_lib(fd);
     info->path = path;
+    info->size = size;
     return (info);
 }

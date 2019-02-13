@@ -12,6 +12,9 @@
 #include "argument_parser.h"
 #include "execution.h"
 
+#define STR_SEC ((char *)header + shdr[header->e_shstrndx].sh_offset)
+#define STR_SYMB ((char *)header + shdr[symtab->sh_link].sh_offset)
+
 enum arch_elf_file_e {
     ARCH_NOT_FOUND,
     ARCH_32,
@@ -36,13 +39,14 @@ struct elf_info_s {
     Elf64_Ehdr *header;
     Elf64_Shdr *shdr;
     Elf64_Shdr *symtab;
+    size_t size;
     symbol_list_t *symbol_list;
 };
 
 typedef struct elf_info_s elf_info_t;
 
 void read_elf(argument_parser_t *args, execution_information_t *exec);
-elf_info_t *get_info_file(void *file, int fd, char *path);
+elf_info_t *get_info_file(void *file, int fd, char *path, size_t size);
 bool is_magic_valid(Elf64_Ehdr *header);
 void get_address_symbol(elf_info_t *elf, execution_information_t *exec);
 void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
@@ -50,5 +54,7 @@ void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
 char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym);
 void display_symbol(argument_parser_t *args, execution_information_t *exec,
     elf_info_t *elf, unsigned int nb_symbol);
+void order_symbol_list(argument_parser_t *args, elf_info_t *elf,
+    unsigned int nb_symbol);
 
 #endif // _ELF_READER_H

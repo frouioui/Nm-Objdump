@@ -8,6 +8,7 @@
 #include <elf.h>
 #include "elf_reader.h"
 #include "execution.h"
+#include "execution_error.h"
 #include "parser_error.h"
 
 static void get_address(elf_info_t *elf)
@@ -21,10 +22,15 @@ static void get_address(elf_info_t *elf)
 
 void read_elf(argument_parser_t *args, execution_information_t *exec)
 {
-    elf_info_t *elf_file = get_info_file(exec->file, exec->fd, exec->name);
+    elf_info_t *elf_file = get_info_file(exec->file, exec->fd, exec->name,
+        exec->size);
 
     if (elf_file == NULL)
         return;
+    if (elf_file->arch == ARCH_NOT_FOUND) {
+        exec->error = new_execution_error(EXEC_NO_ARCH, "no arch found", NULL);
+        return;
+    }
     if (elf_file->static_lib == true) {
         // TODO: Handle AR file
     } else {

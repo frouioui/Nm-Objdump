@@ -6,6 +6,7 @@
 */
 
 #include <elf.h>
+#include <string.h>
 #include "elf_reader.h"
 #include "execution.h"
 #include "parser_error.h"
@@ -18,28 +19,29 @@ static symbol_list_t *new_symbol_list(unsigned int size)
     return (new);
 }
 
-static void find_one_symbol(argument_parser_t *args, Elf64_Sym *sym,
+static bool find_one_symbol(argument_parser_t *args, Elf64_Sym *sym,
     elf_info_t *elf, int *i)
 {
-    Elf64_Ehdr *header = elf->header;
-    Elf64_Shdr *shdr = elf->shdr;
     Elf64_Shdr *symtab = elf->symtab;
+    Elf64_Shdr *shdr = elf->shdr;
+    Elf64_Ehdr *header = elf->header;
 
-    // TODO: Accept the debug symbol
-    if (sym->st_name > 0 && sym->st_info != STT_FILE) {
+    if (sym->st_info != STT_FILE && sym->st_name > 0) {
+        elf->symbol_list[*i].type = guess_type_64(header, shdr, sym);
         elf->symbol_list[*i].sym = sym;
         if (sym->st_info == STT_SECTION && sym->st_shndx <= header->e_shnum &&
             sym->st_name == 0) {
-            elf->symbol_list[*i].name = &((char *)header +
-            shdr[header->e_shstrndx].sh_offset)[shdr[sym->st_shndx].sh_name];
+            elf->symbol_list[*i].name = &STR_SEC[shdr[sym->st_shndx].sh_name];
         } else {
-            elf->symbol_list[*i].name = &((char *)header +
-                shdr[symtab->sh_link].sh_offset)[sym->st_name];
+            elf->symbol_list[*i].name = &STR_SYMB[sym->st_name];
         }
         elf->symbol_list[*i].value = sym->st_value;
-        elf->symbol_list[*i].type = guess_type_64(header, shdr, sym);
+        if ((void *)elf->symbol_list[*i].name > (void *)((char *)elf->header +
+            elf->size))
+            return (false);
         (*i)++;
     }
+    return (true);
 }
 
 void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
@@ -55,7 +57,11 @@ void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
         return;
     while ((void *)sym < (void *)(((char *)header + symtab->sh_offset) +
         symtab->sh_size)) {
-        find_one_symbol(args, sym, elf, &total_nb_symb);
+        if (find_one_symbol(args, sym, elf, &total_nb_symb) == false) {
+            exec->error = new_execution_error(EXEC_TRUNCATED,
+                "given file is truncated", NULL);
+            return;
+        }
         sym++;
     }
     display_symbol(args, exec, elf, total_nb_symb);
