@@ -42,7 +42,16 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/execution/init_execution_information.c		\
 					$(PATH_SRC)/execution/new_error.c						\
 					$(PATH_SRC)/execution/open_file.c						\
+					$(PATH_SRC)/execution/check_size_file.c					\
 					$(PATH_SRC)/execution/load_file.c						\
+					$(PATH_SRC)/execution/elf/read_elf.c					\
+					$(PATH_SRC)/execution/elf/get_info_file.c				\
+					$(PATH_SRC)/execution/elf/check_magic.c					\
+					$(PATH_SRC)/execution/elf/get_symbol_address.c			\
+					$(PATH_SRC)/execution/elf/exec_elf_64.c					\
+					$(PATH_SRC)/execution/elf/guess_type_64.c				\
+					$(PATH_SRC)/execution/elf/display_symbol.c				\
+					$(PATH_SRC)/execution/elf/order_symbol_list.c			\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 

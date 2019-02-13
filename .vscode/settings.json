@@ -9,6 +9,10 @@
         "new": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "execution.h": "c"
+        "execution.h": "c",
+        "elf.h": "c",
+        "parser_error.h": "c",
+        "elf_reader.h": "c",
+        "ar.h": "c"
     }
 }
