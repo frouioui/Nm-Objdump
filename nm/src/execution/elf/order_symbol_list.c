@@ -51,7 +51,8 @@ static void swap_name(unsigned int j, elf_info_t *elf)
         temp = elf->symbol_list[j];
         elf->symbol_list[j] = elf->symbol_list[j + 1];
         elf->symbol_list[j + 1] = temp;
-    } else if (strcmp(cmp1, cmp2) == 0 && elf->symbol_list[j + 1].name[0] == '_') {
+    } else if (strcmp(cmp1, cmp2) == 0 &&
+        elf->symbol_list[j + 1].name[0] == '_') {
         temp = elf->symbol_list[j];
         elf->symbol_list[j] = elf->symbol_list[j + 1];
         elf->symbol_list[j + 1] = temp;
