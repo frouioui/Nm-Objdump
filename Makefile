@@ -8,6 +8,12 @@
 all:
 	make -C ./nm && cp ./nm/my_nm .
 
+nm:
+	make -C ./nm && cp ./nm/my_nm .
+
+objdump:
+	echo "PAS TROP VITE SVPPPPPPPPP"
+
 tests_run:
 #	make tests_compile -C ./nm && mv ./nm/unit_test ./unit_test_nm
 #	./unit_test_nm -j1 --always-succeed
