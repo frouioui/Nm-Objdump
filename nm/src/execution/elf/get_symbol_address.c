@@ -24,6 +24,20 @@ static bool check_out_of_bond_64(elf_info_t *elf, Elf64_Ehdr *header,
     return (true);
 }
 
+static bool check_out_of_bond_32(elf_info_t *elf, Elf32_Ehdr *header,
+    Elf32_Shdr *symtab, Elf32_Shdr *shdr)
+{
+    if ((void *)STR_SYMB > (void *)((void *)elf->header + elf->size)) {
+        return (false);
+    } else if ((void *)STR_SEC > (void *)((void *)elf->header + elf->size)) {
+        return (false);
+    } else if ((void *)((void *)header + symtab->sh_offset) + symtab->sh_size
+        > (void *)((void *)elf->header + elf->size)) {
+        return (false);
+    }
+    return (true);
+}
+
 static void get_address_symbol_32(elf_info_t *elf,
     execution_information_t *exec)
 {
@@ -38,6 +52,14 @@ static void get_address_symbol_32(elf_info_t *elf,
             symtab = (Elf32_Shdr *)elf->symtab;
         }
     }
+    if (!elf->symtab) {
+        exec->error = new_execution_error(EXEC_NO_SYMBOL,
+            "given file has no symbol", NULL);
+        return;
+    }
+    if (check_out_of_bond_32(elf, header, symtab, shdr) == false)
+        exec->error = new_execution_error(EXEC_TRUNCATED,
+            "given file is truncated", NULL);
 }
 
 static void get_address_symbol_64(elf_info_t *elf,

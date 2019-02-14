@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/my_nm",
-            "args": ["my_nm"],
+            "args": ["32bit_a.out"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

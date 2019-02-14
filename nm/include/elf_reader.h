@@ -51,7 +51,10 @@ bool is_magic_valid(Elf64_Ehdr *header);
 void get_address_symbol(elf_info_t *elf, execution_information_t *exec);
 void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
     elf_info_t *elf_info);
+void exec_elf_32(argument_parser_t *args, execution_information_t *exec,
+    elf_info_t *elf);
 char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym);
+char guess_type_32(Elf32_Ehdr *header, Elf32_Shdr *shdr, Elf32_Sym *sym);
 void display_symbol(argument_parser_t *args, execution_information_t *exec,
     elf_info_t *elf, unsigned int nb_symbol);
 void order_symbol_list(argument_parser_t *args, elf_info_t *elf,
