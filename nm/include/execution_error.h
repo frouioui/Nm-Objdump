@@ -15,7 +15,8 @@ enum execution_error_type_e {
     EXEC_FILE_IS_DIR,
     EXEC_FILE_IS_NOT_ORDINARY,
     EXEC_NO_ARCH,
-    EXEC_TRUNCATED
+    EXEC_TRUNCATED,
+    EXEC_NO_SYMBOL
 };
 
 typedef enum execution_error_type_e execution_error_type_t;
