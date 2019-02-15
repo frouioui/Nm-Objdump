@@ -29,19 +29,27 @@ static char find_type(Elf32_Shdr *shdr, Elf32_Sym *sym)
     return (c);
 }
 
+static char check_week_unique_object(Elf32_Sym *sym)
+{
+    char c = 0;
+
+    if (ELF32_ST_BIND(sym->st_info) == STB_WEAK &&
+                                ELF32_ST_TYPE(sym->st_info) == STT_OBJECT)
+        c = (sym->st_shndx == SHN_UNDEF) ? 'v' : 'V';
+    if (c == 0 && ELF32_ST_BIND(sym->st_info) == STB_WEAK)
+        c = (sym->st_shndx == SHN_UNDEF) ? 'w' : 'W';
+    if (c == 0 && ELF32_ST_BIND(sym->st_info) == STB_GNU_UNIQUE)
+        c = 'u';
+    return (c);
+}
+
 char guess_type_32(Elf32_Ehdr *header, Elf32_Shdr *shdr, Elf32_Sym *sym)
 {
     char c;
 
     // FIXME: Coding style non compliant
-    if (ELF32_ST_BIND(sym->st_info) == STB_GNU_UNIQUE)
-        c = 'u';
-    else if (ELF32_ST_BIND(sym->st_info) == STB_WEAK)
-        c = (sym->st_shndx == SHN_UNDEF) ? 'w' : 'W';
-    else if (ELF32_ST_BIND(sym->st_info) == STB_WEAK &&
-        ELF32_ST_TYPE(sym->st_info) == STT_OBJECT)
-        c = (sym->st_shndx == SHN_UNDEF) ? 'v' : 'V';
-    else
+    c = check_week_unique_object(sym);
+    if (c == 0)
         c = find_type(shdr, sym);
     if (c == '?' &&
         (strcmp(&((char *)header + shdr[header->e_shstrndx].sh_offset)
