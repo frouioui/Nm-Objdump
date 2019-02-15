@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2019
 ** PSU_NmObjdump
 ** File description:
-** guess the type of the symbol for 64bits
+** guess the type of the symbol for 32bits
 */
 
 #include <elf.h>
 #include <string.h>
 
-static char find_type(Elf64_Shdr *shdr, Elf64_Sym *sym)
+static char find_type(Elf32_Shdr *shdr, Elf32_Sym *sym)
 {
     char c = 0;
 
@@ -29,21 +29,21 @@ static char find_type(Elf64_Shdr *shdr, Elf64_Sym *sym)
     return (c);
 }
 
-static char check_week_unique_object(Elf64_Sym *sym)
+static char check_week_unique_object(Elf32_Sym *sym)
 {
     char c = 0;
 
-    if (ELF64_ST_BIND(sym->st_info) == STB_WEAK &&
-                                ELF64_ST_TYPE(sym->st_info) == STT_OBJECT)
+    if (ELF32_ST_BIND(sym->st_info) == STB_WEAK &&
+                                ELF32_ST_TYPE(sym->st_info) == STT_OBJECT)
         c = (sym->st_shndx == SHN_UNDEF) ? 'v' : 'V';
-    if (c == 0 && ELF64_ST_BIND(sym->st_info) == STB_WEAK)
+    if (c == 0 && ELF32_ST_BIND(sym->st_info) == STB_WEAK)
         c = (sym->st_shndx == SHN_UNDEF) ? 'w' : 'W';
-    if (c == 0 && ELF64_ST_BIND(sym->st_info) == STB_GNU_UNIQUE)
+    if (c == 0 && ELF32_ST_BIND(sym->st_info) == STB_GNU_UNIQUE)
         c = 'u';
     return (c);
 }
 
-char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym)
+char guess_type_32(Elf32_Ehdr *header, Elf32_Shdr *shdr, Elf32_Sym *sym)
 {
     char c;
 
@@ -57,7 +57,7 @@ char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym)
         strcmp(&((char *)header + shdr[header->e_shstrndx].sh_offset)
         [shdr[sym->st_shndx].sh_name], ".fini_array")))
         c = 'T';
-    if (ELF64_ST_BIND(sym->st_info) == STB_LOCAL && c != '?')
+    if (ELF32_ST_BIND(sym->st_info) == STB_LOCAL && c != '?')
         c += 32;
     return (c);
 }
