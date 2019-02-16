@@ -11,7 +11,7 @@
 #include <elf.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
-#include "nm_program.h"
+#include "objdump_program.h"
 #include "execution.h"
 #include "execution_error.h"
 

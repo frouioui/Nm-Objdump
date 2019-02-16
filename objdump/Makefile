@@ -31,7 +31,29 @@ PATH_SRC		=	./src
 
 MAIN_FILE_PATH	=	$(PATH_SRC)/main.c										\
 
-SRC				=	#$(PATH_SRC)/argument_parser/get_argument.c				\
+SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
+					$(PATH_SRC)/argument_parser/init_argument.c				\
+					$(PATH_SRC)/argument_parser/check_each_short_flag.c		\
+					$(PATH_SRC)/argument_parser/check_each_long_flag.c		\
+					$(PATH_SRC)/argument_parser/set_global_variable.c		\
+					$(PATH_SRC)/argument_parser/get_filename.c				\
+					$(PATH_SRC)/execution/execution.c						\
+					$(PATH_SRC)/execution/check_size_file.c					\
+					$(PATH_SRC)/execution/init_execution_information.c		\
+					$(PATH_SRC)/execution/load_file.c						\
+					$(PATH_SRC)/execution/new_error.c						\
+					$(PATH_SRC)/execution/open_file.c						\
+					$(PATH_SRC)/execution/elf/check_magic.c					\
+					$(PATH_SRC)/execution/elf/exec_elf_64.c					\
+					$(PATH_SRC)/execution/elf/get_arch_string.c				\
+					$(PATH_SRC)/execution/elf/get_info_file.c				\
+					$(PATH_SRC)/execution/elf/get_symbol_address.c			\
+					$(PATH_SRC)/execution/elf/read_elf.c					\
+					$(PATH_SRC)/execution/elf/display_flags_64.c			\
+					$(PATH_SRC)/start_program.c								\
+					$(PATH_SRC)/display_error.c								\
+					$(PATH_SRC)/display_helper.c							\
+					# $(PATH_SRC)/execution/elf/exec_elf_32.c					\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests

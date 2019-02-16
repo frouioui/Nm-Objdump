@@ -13,6 +13,7 @@
         "elf.h": "c",
         "parser_error.h": "c",
         "elf_reader.h": "c",
-        "ar.h": "c"
+        "ar.h": "c",
+        "argument_parser.h": "c"
     }
 }
