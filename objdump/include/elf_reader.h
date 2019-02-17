@@ -112,6 +112,6 @@ void display_symbol(argument_parser_t *args, execution_information_t *exec,
 void order_symbol_list(argument_parser_t *args, elf_info_t *elf,
     unsigned int nb_symbol);
 char *arch_string_64(Elf64_Ehdr *header);
-void display_flags_64(Elf64_Ehdr *header);
+void display_flags_64(Elf64_Ehdr *header, int flag);
 
 #endif // _ELF_READER_H

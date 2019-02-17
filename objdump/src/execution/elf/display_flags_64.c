@@ -8,7 +8,7 @@
 #include <elf.h>
 #include "elf_reader.h"
 
-void display_flags_64(Elf64_Ehdr *header)
+void display_flags_64(Elf64_Ehdr *header, int flag)
 {
     bool first = true;
     flags_objdump_t flags[10] = {{BFD_NO_FLAGS, BFD_NO_FLAGS_STR}, {HAS_RELOC,
@@ -18,7 +18,7 @@ void display_flags_64(Elf64_Ehdr *header)
     D_PAGED_STR}};
 
     for (unsigned int i = 0; i < 10; i++) {
-        if (header->e_flags & flags[i].type) {
+        if (flag & flags[i].type) {
             first == false ? printf(", ") : 0;
             first = false;
             printf("%s", flags[i].value);

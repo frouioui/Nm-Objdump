@@ -40,7 +40,7 @@ static void print_header_64(elf_info_t *elf, Elf64_Ehdr *header, int flag)
 {
     printf("\n%s:     file format elf64-x86-64\n", elf->path);
     printf("architecture: %s, flags 0x%08x:\n", arch_string_64(header), flag);
-    display_flags_64(header);
+    display_flags_64(header, flag);
     printf("\nstart address 0x%016lx\n\n", header->e_entry);
 }
 
