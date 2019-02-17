@@ -64,7 +64,7 @@ static bool important_section(Elf64_Ehdr *header, Elf64_Shdr *shdr,
     if (shdr[i].sh_size <= 0)
         return (false);
     for (unsigned int i = 0; i < 11; i++) {
-        if (strcmp(non_important[i], &STR_SEC[shdr[i].sh_name]) != 0) {
+        if (!strcmp(non_important[i], &STR_SEC[shdr[i].sh_name])) {
             return (false);
         }
     }
