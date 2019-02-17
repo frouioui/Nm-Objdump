@@ -9,10 +9,14 @@ all:
 	make -C ./nm && cp ./nm/my_nm .
 	make -C ./objdump && cp ./objdump/my_objdump .
 
-nm:
+nm: nm_compile
+
+nm_compile:
 	make -C ./nm && cp ./nm/my_nm .
 
-objdump:
+objdump: objdump_compile
+
+objdump_compile:
 	make -C ./objdump && cp ./objdump/my_objdump .
 
 tests_run:
