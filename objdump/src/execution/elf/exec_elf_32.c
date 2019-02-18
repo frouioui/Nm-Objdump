@@ -11,58 +11,69 @@
 #include "execution.h"
 #include "parser_error.h"
 
-static symbol_list_t *new_symbol_list(unsigned int size)
-{
-    symbol_list_t *new = NULL;
 
-    new = calloc(1, sizeof(symbol_list_t) * size);
-    return (new);
+static void print_header_32(elf_info_t *elf, Elf32_Ehdr *header, int flag)
+{
+    printf("\n%s:     file format elf32-i386\n", elf->path);
+    printf("architecture: %s, flags 0x%08x:\n", arch_string_32(header), flag);
+    display_flags_32(header, flag);
+    printf("\nstart address 0x%08x\n\n", header->e_entry);
 }
 
-static bool find_one_symbol(argument_parser_t *args, Elf32_Sym *sym,
-    elf_info_t *elf, int *i)
+static int set_flag_file_type(Elf32_Ehdr *header)
 {
-    Elf32_Shdr *symtab = (Elf32_Shdr *)elf->symtab;
-    Elf32_Shdr *shdr = (Elf32_Shdr *)elf->shdr;
-    Elf32_Ehdr *header = (Elf32_Ehdr *)elf->header;
+    int flag = 0;
 
-    if (sym->st_info != STT_FILE && sym->st_name > 0) {
-        elf->symbol_list[*i].type = guess_type_32(header, shdr, sym);
-        elf->symbol_list[*i].sym = (Elf64_Sym *)sym;
-        if (sym->st_info == STT_SECTION && sym->st_shndx <= header->e_shnum &&
-            sym->st_name == 0) {
-            elf->symbol_list[*i].name = &STR_SEC[shdr[sym->st_shndx].sh_name];
-        } else {
-            elf->symbol_list[*i].name = &STR_SYMB[sym->st_name];
-        }
-        elf->symbol_list[*i].value = sym->st_value;
-        if ((void *)elf->symbol_list[*i].name > (void *)((char *)elf->header +
-            elf->size))
+    header->e_type == ET_REL ? flag = 17 : 0;
+    header->e_type == ET_EXEC ? flag = 274 : 0;
+    header->e_type == ET_DYN ? flag = 336 : 0;
+    return (flag);
+}
+
+static bool important_section(Elf32_Ehdr *header, Elf32_Shdr *shdr,
+    unsigned int i)
+{
+    char non_important[11][30] = {".bss", ".symtab", ".shstrtab", ".strtab",
+    ".rela.debug_line", ".rela.debug_aranges", ".rela.debug_info", ".tbss",
+    ".rela.text", ".rela.eh_frame", "__libc_freeres_ptrs"};
+
+    if (shdr[i].sh_size <= 0)
+        return (false);
+    for (unsigned int j = 0; j < 11; j++) {
+        if (!strcmp(non_important[j], &STR_SEC[shdr[i].sh_name])) {
             return (false);
-        (*i)++;
+        }
     }
     return (true);
+}
+
+static void execute_one_paragraph(Elf32_Ehdr *header, Elf32_Shdr *shdr,
+    unsigned int i, elf_info_t *elf)
+{
+    unsigned int j = 0;
+
+    if (important_section(header, shdr, i) == true) {
+        printf("Contents of section %s:\n", &STR_SEC[shdr[i].sh_name]);
+        j = shdr[i].sh_offset;
+        while (j < (unsigned int)(shdr[i].sh_size + shdr[i].sh_offset)) {
+            printf(" %04x ", (int)(shdr[i].sh_addr + j - shdr[i].sh_offset));
+            display_value_in_hexa((void *)header + j,
+                shdr[i].sh_offset + shdr[i].sh_size - j);
+            printf("\n");
+            j += 16;
+        }
+    }
 }
 
 void exec_elf_32(argument_parser_t *args, execution_information_t *exec,
     elf_info_t *elf)
 {
-    unsigned int total_nb_symb = 0;
     Elf32_Ehdr *header = (Elf32_Ehdr *)elf->header;
-    Elf32_Shdr *symtab = (Elf32_Shdr *)elf->symtab;
-    Elf32_Sym *sym = (Elf32_Sym *)((char *)header + symtab->sh_offset);
+    Elf32_Shdr *shdr = (Elf32_Shdr *)elf->shdr;
+    int flag = set_flag_file_type(header);
 
-    elf->symbol_list = new_symbol_list(symtab->sh_size);
-    if (elf->symbol_list == NULL)
-        return;
-    while ((void *)sym < (void *)(((char *)header + symtab->sh_offset) +
-        symtab->sh_size)) {
-        if (find_one_symbol(args, sym, elf, &total_nb_symb) == false) {
-            exec->error = new_execution_error(EXEC_TRUNCATED,
-                "given file is truncated", NULL);
-            return;
-        }
-        sym++;
+    print_header_32(elf, header, flag);
+    for (unsigned int i = 0; i < header->e_shnum; i++) {
+        execute_one_paragraph(header, shdr, i, elf);
     }
-    display_symbol(args, exec, elf, total_nb_symb);
 }

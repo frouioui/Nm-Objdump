@@ -54,7 +54,8 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 					$(PATH_SRC)/execution/elf/display_hexadecimal.c			\
-					# $(PATH_SRC)/execution/elf/exec_elf_32.c					\
+					$(PATH_SRC)/execution/elf/display_flags_32.c			\
+					$(PATH_SRC)/execution/elf/exec_elf_32.c					\
 
 ## ---------------- TESTS ---------------- ##
 PATH_TEST		=	./tests
