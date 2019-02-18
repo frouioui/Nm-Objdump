@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/my_objdump",
-            "args": ["my_nm"],
+            "args": ["tests/a.out"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

@@ -38,7 +38,7 @@ void read_elf(argument_parser_t *args, execution_information_t *exec)
         get_section_header_address(elf_file);
         get_address_symbol(elf_file, exec);
         if (elf_file->arch == ARCH_32 && !exec->error.type) {
-            // exec_elf_32(args, exec, elf_file);
+            exec_elf_32(args, exec, elf_file);
         } else if (elf_file->arch == ARCH_64 && !exec->error.type) {
             exec_elf_64(args, exec, elf_file);
         }
