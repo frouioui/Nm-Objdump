@@ -113,5 +113,6 @@ void order_symbol_list(argument_parser_t *args, elf_info_t *elf,
     unsigned int nb_symbol);
 char *arch_string_64(Elf64_Ehdr *header);
 void display_flags_64(Elf64_Ehdr *header, int flag);
+void display_value_in_hexa(void *data, unsigned int size);
 
 #endif // _ELF_READER_H

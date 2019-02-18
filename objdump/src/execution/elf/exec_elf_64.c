@@ -11,31 +11,6 @@
 #include "execution.h"
 #include "parser_error.h"
 
-// static bool find_one_symbol(argument_parser_t *args, Elf64_Sym *sym,
-//     elf_info_t *elf, int *i)
-// {
-//     Elf64_Shdr *symtab = elf->symtab;
-//     Elf64_Shdr *shdr = elf->shdr;
-//     Elf64_Ehdr *header = elf->header;
-
-//     if (sym->st_info != STT_FILE && sym->st_name > 0) {
-//         elf->symbol_list[*i].type = guess_type_64(header, shdr, sym);
-//         elf->symbol_list[*i].sym = sym;
-//         if (sym->st_info == STT_SECTION && sym->st_shndx <= header->e_shnum &&
-//             sym->st_name == 0) {
-//             elf->symbol_list[*i].name = &STR_SEC[shdr[sym->st_shndx].sh_name];
-//         } else {
-//             elf->symbol_list[*i].name = &STR_SYMB[sym->st_name];
-//         }
-//         elf->symbol_list[*i].value = sym->st_value;
-//         if ((void *)elf->symbol_list[*i].name > (void *)((char *)elf->header +
-//             elf->size))
-//             return (false);
-//         (*i)++;
-//     }
-//     return (true);
-// }
-
 static void print_header_64(elf_info_t *elf, Elf64_Ehdr *header, int flag)
 {
     printf("\n%s:     file format elf64-x86-64\n", elf->path);
@@ -74,8 +49,18 @@ static bool important_section(Elf64_Ehdr *header, Elf64_Shdr *shdr,
 static void execute_one_paragraph(Elf64_Ehdr *header, Elf64_Shdr *shdr,
     unsigned int i, elf_info_t *elf)
 {
+    unsigned int j = 0;
+
     if (important_section(header, shdr, i) == true) {
         printf("Contents of section %s:\n", &STR_SEC[shdr[i].sh_name]);
+        j = shdr[i].sh_offset;
+        while (j < (unsigned int)(shdr[i].sh_size + shdr[i].sh_offset)) {
+            printf(" %04x ", (int)(shdr[i].sh_addr + j - shdr[i].sh_offset));
+            display_value_in_hexa((void *)header + j,
+                shdr[i].sh_offset + shdr[i].sh_size - j);
+            printf("\n");
+            j += 16;
+        }
     }
 }
 
