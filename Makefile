@@ -20,8 +20,8 @@ objdump_compile:
 	make -C ./objdump && cp ./objdump/my_objdump .
 
 tests_run:
-	# make tests_compile -C ./nm && mv ./nm/unit_test ./unit_test_nm
-	# ./unit_test_nm -j1 --always-succeed
+	make tests_compile -C ./nm && mv ./nm/unit_test ./unit_test_nm
+	./unit_test_nm -j1 --always-succeed
 
 tests_run_docker:
 	docker run -v $(PWD):/app epitechcontent/epitest-docker bash -c "cd app && make fclean && make tests_run && gcovr"

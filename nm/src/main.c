@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     if (nm == NULL || nm->args == NULL)
         return (NM_FAILURE);
     get_argument(argc, argv, nm->args);
-
     if (nm->args->error.type != NO_ERROR_PARSER) {
         display_error(nm->prog_name, nm->args->error);
         return (NM_FAILURE);

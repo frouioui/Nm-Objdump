@@ -13,7 +13,7 @@
 
 Test(execution, open_file_valid_file)
 {
-    execution_information_t *exec = init_execution_information();
+    execution_information_t *exec = init_execution_information("jul");
 
     open_file(exec, "Makefile");
     cr_assert_gt(exec->fd, 2);
@@ -22,7 +22,7 @@ Test(execution, open_file_valid_file)
 
 Test(execution, open_file_invalid_file)
 {
-    execution_information_t *exec = init_execution_information();
+    execution_information_t *exec = init_execution_information("jul");
 
     open_file(exec, "i am invalid");
     cr_assert_eq(exec->fd, -1);
@@ -33,7 +33,7 @@ Test(execution, open_file_invalid_file)
 
 Test(execution, open_file_no_file)
 {
-    execution_information_t *exec = init_execution_information();
+    execution_information_t *exec = init_execution_information("jul");
 
     open_file(exec, NULL);
     cr_assert_eq(exec->fd, 0);

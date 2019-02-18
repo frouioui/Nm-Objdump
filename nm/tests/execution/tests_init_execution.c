@@ -15,14 +15,16 @@ Test(execution, check_value_not_null)
 {
     execution_information_t *exec = NULL;
 
-    exec = init_execution_information();
+    exec = init_execution_information("jul");
     cr_assert_not_null(exec);
+    cr_assert_str_eq(exec->name, "jul");
 }
 
 Test(execution, check_value_value)
 {
     execution_information_t *exec = NULL;
 
-    exec = init_execution_information();
+    exec = init_execution_information("julll");
     cr_assert_eq(exec->fd, 0);
+    cr_assert_str_eq(exec->name, "julll");
 }
