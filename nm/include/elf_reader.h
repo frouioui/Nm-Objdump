@@ -69,5 +69,6 @@ void order_symbol_list(argument_parser_t *args, elf_info_t *elf,
 void read_static_lib(elf_info_t *elf, argument_parser_t *args,
     execution_information_t *exec, char *filename);
 void get_section_header_address(elf_info_t *elf);
+void get_name(elf_info_t *elf, char *header, unsigned int header_size);
 
 #endif // _ELF_READER_H

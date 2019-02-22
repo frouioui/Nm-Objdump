@@ -82,7 +82,6 @@ static bool get_content(int fd, argument_parser_t *args,
     if (info->exec->error.type != NO_EXEC_ERROR)
         return (false);
     info->name = elf->path;
-    printf("\n%s:\n", elf->path);
     if (elf->arch == ARCH_32) {
         exec_elf_32(args, info->exec, elf);
     } else if (elf->arch == ARCH_64) {

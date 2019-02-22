@@ -60,6 +60,13 @@
 #define D_PAGED 0x100
 #define D_PAGED_STR "D_PAGED"
 
+typedef struct info_ar_s {
+    execution_information_t *exec;
+    char *header;
+    char *name;
+    unsigned int size;
+} info_ar_t;
+
 struct flags_objdump_s {
     int type;
     char *value;
@@ -116,5 +123,9 @@ void display_flags_64(Elf64_Ehdr *header, int flag);
 void display_flags_32(Elf32_Ehdr *header, int flag);
 void display_value_in_hexa(void *data, unsigned int size);
 char *arch_string_32(Elf32_Ehdr *header);
+void read_static_lib(elf_info_t *elf, argument_parser_t *args,
+    execution_information_t *exec, char *filename);
+void get_name(elf_info_t *elf, char *header, unsigned int header_size);
+void get_section_header_address(elf_info_t *elf);
 
 #endif // _ELF_READER_H
