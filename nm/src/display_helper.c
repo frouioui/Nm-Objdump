@@ -8,9 +8,7 @@
 #include <stdio.h>
 #include "helper.h"
 
-const char helper[200] = {
-    "nm helper"
-};
+const char helper[200] = {"nm helper"};
 
 void display_helper(void)
 {

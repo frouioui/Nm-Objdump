@@ -33,7 +33,6 @@ void read_elf(argument_parser_t *args, execution_information_t *exec)
         return;
     }
     if (elf_file->static_lib == true) {
-        // TODO: Handle AR file
     } else {
         get_section_header_address(elf_file);
         get_address_symbol(elf_file, exec);

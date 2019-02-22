@@ -12,9 +12,6 @@
 #include "execution.h"
 #include "elf_reader.h"
 
-// FIXME: following line only useful if we need the real size
-// printf("%0*x", ((elf->arch == ARCH_32) ? 8 : 16),
-// (unsigned int)(elf->symbol_list[i].sym)->st_size);
 static void display_one_symbol_line(argument_parser_t *args,
     execution_information_t *exec, elf_info_t *elf, unsigned int i)
 {

@@ -47,7 +47,6 @@ char guess_type_32(Elf32_Ehdr *header, Elf32_Shdr *shdr, Elf32_Sym *sym)
 {
     char c;
 
-    // FIXME: Coding style non compliant
     c = check_week_unique_object(sym);
     if (c == 0)
         c = find_type(shdr, sym);

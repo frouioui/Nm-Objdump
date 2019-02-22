@@ -34,7 +34,7 @@ static char check_week_unique_object(Elf64_Sym *sym)
     char c = 0;
 
     if (ELF64_ST_BIND(sym->st_info) == STB_WEAK &&
-                                ELF64_ST_TYPE(sym->st_info) == STT_OBJECT)
+        ELF64_ST_TYPE(sym->st_info) == STT_OBJECT)
         c = (sym->st_shndx == SHN_UNDEF) ? 'v' : 'V';
     if (c == 0 && ELF64_ST_BIND(sym->st_info) == STB_WEAK)
         c = (sym->st_shndx == SHN_UNDEF) ? 'w' : 'W';
@@ -47,7 +47,6 @@ char guess_type_64(Elf64_Ehdr *header, Elf64_Shdr *shdr, Elf64_Sym *sym)
 {
     char c;
 
-    // FIXME: Coding style non compliant
     c = check_week_unique_object(sym);
     if (c == 0)
         c = find_type(shdr, sym);

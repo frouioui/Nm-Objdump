@@ -11,7 +11,7 @@
 #include "execution_error.h"
 #include "parser_error.h"
 
-static void get_section_header_address(elf_info_t *elf)
+void get_section_header_address(elf_info_t *elf)
 {
     if (elf->arch == ARCH_32) {
         elf->shdr = (Elf64_Shdr *)((char *)elf->header +
@@ -28,12 +28,12 @@ void read_elf(argument_parser_t *args, execution_information_t *exec)
 
     if (elf_file == NULL)
         return;
-    if (elf_file->arch == ARCH_NOT_FOUND) {
+    if (elf_file->arch == ARCH_NOT_FOUND && elf_file->static_lib == false) {
         exec->error = new_execution_error(EXEC_NO_ARCH, "no arch found", NULL);
         return;
     }
     if (elf_file->static_lib == true) {
-        // TODO: Handle AR file
+        read_static_lib(elf_file, args, exec, exec->name);
     } else {
         get_section_header_address(elf_file);
         get_address_symbol(elf_file, exec);
