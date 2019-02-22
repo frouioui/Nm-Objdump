@@ -98,6 +98,7 @@ void read_static_lib(elf_info_t *elf, argument_parser_t *args,
     struct ar_hdr *ar = NULL;
     info_ar_t info = {exec: exec, name: ""};
 
+    printf("In archive %s:\n", filename);
     if (check_ar(&header, &ar_size, exec->fd) == false)
         return;
     while (get_header(&ar, exec->fd) != false) {
