@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** PSU_NmObjdump_2019
 ** File description:
-** File of the main function of the program
+** File containing functions
 */
 
 #include <stdlib.h>
@@ -31,6 +31,6 @@ int main(int argc, char **argv)
     }
     error = execution(nm);
     if (error.type != NO_EXEC_ERROR)
-        printf("%s: %s\n", nm->prog_name, error.message);
+        printf("nm: %s\n", error.message);
     return (error.type == NO_EXEC_ERROR ? NM_SUCCESS : NM_FAILURE);
 }

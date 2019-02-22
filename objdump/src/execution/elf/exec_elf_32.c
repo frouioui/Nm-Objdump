@@ -11,7 +11,6 @@
 #include "execution.h"
 #include "parser_error.h"
 
-
 static void print_header_32(elf_info_t *elf, Elf32_Ehdr *header, int flag)
 {
     printf("\n%s:     file format elf32-i386\n", elf->path);

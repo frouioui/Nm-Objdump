@@ -17,7 +17,8 @@ static bool check_out_of_bond_64(elf_info_t *elf, Elf64_Ehdr *header,
         return (false);
     } else if ((void *)STR_SEC > (void *)((void *)elf->header + elf->size)) {
         return (false);
-    } else if ((void *)((void *)header + symtab->sh_offset) + symtab->sh_size
+    }
+    if ((void *)((void *)header + symtab->sh_offset) + symtab->sh_size
         > (void *)((void *)elf->header + elf->size)) {
         return (false);
     }
@@ -31,7 +32,8 @@ static bool check_out_of_bond_32(elf_info_t *elf, Elf32_Ehdr *header,
         return (false);
     } else if ((void *)STR_SEC > (void *)((void *)elf->header + elf->size)) {
         return (false);
-    } else if ((void *)((void *)header + symtab->sh_offset) + symtab->sh_size
+    }
+    if ((void *)((void *)header + symtab->sh_offset) + symtab->sh_size
         > (void *)((void *)elf->header + elf->size)) {
         return (false);
     }

@@ -14,6 +14,7 @@
         "parser_error.h": "c",
         "elf_reader.h": "c",
         "ar.h": "c",
-        "argument_parser.h": "c"
+        "argument_parser.h": "c",
+        "execution_error.h": "c"
     }
 }

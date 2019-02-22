@@ -54,6 +54,8 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/execution/elf/guess_type_32.c				\
 					$(PATH_SRC)/execution/elf/display_symbol.c				\
 					$(PATH_SRC)/execution/elf/order_symbol_list.c			\
+					$(PATH_SRC)/execution/elf/read_static_lib.c				\
+					$(PATH_SRC)/execution/elf/get_name_static.c				\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\
 
