@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/my_nm",
-            "args": ["~/Project/School/1st-Year/SHELL/42sh/PSU_42sh_2017/lib/libmy.a"],
+            "args": ["/lib/i386-linux-gnu/libpthread-2.27.so"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

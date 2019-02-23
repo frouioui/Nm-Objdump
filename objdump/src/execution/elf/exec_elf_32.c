@@ -21,12 +21,17 @@ static void print_header_32(elf_info_t *elf, Elf32_Ehdr *header, int flag)
 
 static int set_flag_file_type(Elf32_Ehdr *header)
 {
-    int flag = 0;
+    int flags = 0x0000;
 
-    header->e_type == ET_REL ? flag = 17 : 0;
-    header->e_type == ET_EXEC ? flag = 274 : 0;
-    header->e_type == ET_DYN ? flag = 336 : 0;
-    return (flag);
+    if (header->e_type == ET_EXEC)
+        flags += EXEC_P + D_PAGED;
+    else if (header->e_type == ET_DYN)
+        flags += DYNAMIC + D_PAGED;
+    if (header->e_type == ET_REL && header->e_type != ET_EXEC &&
+        header->e_type != ET_DYN)
+        flags += HAS_RELOC;
+    flags += has_syms_32(header);
+    return (flags);
 }
 
 static bool important_section(Elf32_Ehdr *header, Elf32_Shdr *shdr,
@@ -50,12 +55,15 @@ static void execute_one_paragraph(Elf32_Ehdr *header, Elf32_Shdr *shdr,
     unsigned int i, elf_info_t *elf)
 {
     unsigned int j = 0;
+    int diff = 0;
 
     if (important_section(header, shdr, i) == true) {
         printf("Contents of section %s:\n", &STR_SEC[shdr[i].sh_name]);
         j = shdr[i].sh_offset;
+        diff = get_difference_size_32(shdr, i);
         while (j < (unsigned int)(shdr[i].sh_size + shdr[i].sh_offset)) {
-            printf(" %04x ", (int)(shdr[i].sh_addr + j - shdr[i].sh_offset));
+            printf(" %0*x ", diff + 4, (int)(shdr[i].sh_addr + j -
+                shdr[i].sh_offset));
             display_value_in_hexa((void *)header + j,
                 shdr[i].sh_offset + shdr[i].sh_size - j);
             printf("\n");

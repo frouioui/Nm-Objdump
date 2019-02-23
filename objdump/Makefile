@@ -52,6 +52,8 @@ SRC				=	$(PATH_SRC)/argument_parser/get_argument.c				\
 					$(PATH_SRC)/execution/elf/display_flags_64.c			\
 					$(PATH_SRC)/execution/elf/get_name_static.c				\
 					$(PATH_SRC)/execution/elf/read_static_lib.c				\
+					$(PATH_SRC)/execution/elf/check_syms.c					\
+					$(PATH_SRC)/execution/elf/get_difference_size.c			\
 					$(PATH_SRC)/start_program.c								\
 					$(PATH_SRC)/display_error.c								\
 					$(PATH_SRC)/display_helper.c							\

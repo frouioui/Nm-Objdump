@@ -6,6 +6,7 @@
 */
 
 #include <elf.h>
+#include <string.h>
 #include "elf_reader.h"
 #include "execution.h"
 #include "parser_error.h"
@@ -73,6 +74,6 @@ void get_address_symbol(elf_info_t *elf, execution_information_t *exec)
     }
     if (valid == false) {
         exec->error = new_execution_error(EXEC_TRUNCATED,
-            "given file is truncated", NULL);
+            strcat(elf->path, ": File format not recognized"), NULL);
     }
 }

@@ -59,7 +59,7 @@ void exec_elf_64(argument_parser_t *args, execution_information_t *exec,
         symtab->sh_size)) {
         if (find_one_symbol(args, sym, elf, &total_nb_symb) == false) {
             exec->error = new_execution_error(EXEC_TRUNCATED,
-                "given file is truncated", NULL);
+                strcat(elf->path, ": File format not recognized"), NULL);
             return;
         }
         sym++;

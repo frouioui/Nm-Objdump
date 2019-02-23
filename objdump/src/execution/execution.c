@@ -34,7 +34,6 @@ static execution_information_t *begin_execution_loop(objdump_program_t *obj,
     execution_information_t *exec = NULL;
 
     exec = init_execution_information(obj->args->files[i]);
-    obj->args->number_of_file > 1 ? printf("\n%s:\n", exec->name) : 0;
     open_file(exec, exec->name);
     return (exec);
 }

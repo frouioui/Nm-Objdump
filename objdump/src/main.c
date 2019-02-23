@@ -31,6 +31,6 @@ int main(int argc, char **argv)
     }
     error = execution(obj);
     if (error.type != NO_EXEC_ERROR)
-        printf("%s: %s\n", obj->prog_name, error.message);
+        printf("objdump: %s\n", error.message);
     return (error.type == NO_EXEC_ERROR ? OBJ_SUCCESS : OBJ_FAILURE);
 }
