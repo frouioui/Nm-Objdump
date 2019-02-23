@@ -14,14 +14,14 @@
 
 static int get_len_int(int nb)
 {
-	int result = nb;
-	int i = 0;
+    int result = nb;
+    int i = 0;
 
-	while (result > 0) {
-		result = result / 10;
-		i++;
-	}
-	return (i);
+    while (result > 0) {
+        result = result / 10;
+        i++;
+    }
+    return (i);
 }
 
 static int get_len_hexa(int nb)
@@ -57,8 +57,7 @@ int get_difference_size_32(Elf32_Shdr *shdr, unsigned int i)
             big = temp;
         j += 16;
     }
-    if (big <= 4)
-        return (0);
+    big = (big <= 4) ? 0 : big;
     return (big - small);
 }
 
@@ -82,7 +81,6 @@ int get_difference_size(Elf64_Shdr *shdr, unsigned int i)
             big = temp;
         j += 16;
     }
-    if (big <= 4)
-        return (0);
+    big = (big <= 4) ? 0 : big;
     return (big - small);
 }
