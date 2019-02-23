@@ -12,6 +12,8 @@ static char find_type(Elf64_Shdr *shdr, Elf64_Sym *sym)
 {
     char c = 0;
 
+    if (sym->st_shndx > 50000)
+        return (c);
     sym->st_shndx == SHN_UNDEF ? c = 'U' : 0;
     sym->st_shndx == SHN_ABS ? c = 'A' : 0;
     sym->st_shndx == SHN_COMMON ? c = 'C' : 0;
