@@ -11,7 +11,7 @@ BINARY_NAME		=	my_objdump
 BINARY_TEST_MAME =	unit_test
 
 ## ---------------- CC ---------------- ##
-CC				=	gcc $(HEADER) -g3
+CC				=	gcc $(HEADER)
 
 ## ---------------- FLAGS ---------------- ##
 WARNING			=	-W -Wextra -Werror
